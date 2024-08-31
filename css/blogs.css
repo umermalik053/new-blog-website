@@ -1,0 +1,247 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arial", sans-serif;
+}
+
+body {
+  background-color: whitesmoke;
+}
+/* navbar style  */
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 100px;
+}
+.nav1 {
+  width: 50%;
+  font-size: 20px;
+}
+.nav2 {
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+}
+.logo1 a {
+  color: #0097e6;
+  text-decoration: none;
+}
+.logo2 {
+  color: #fbc531;
+}
+.anchor {
+  color: white;
+  text-decoration: none;
+}
+
+/* button from uiverse  */
+.btn-lgn {
+  --primary-color: #0097e6;
+  --secondary-color: #fff;
+  --hover-color: #fbc531;
+  --arrow-width: 10px;
+  --arrow-stroke: 2px;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 20px;
+  color: var(--secondary-color);
+  padding: 1em 1.8em;
+  background: var(--primary-color);
+  display: flex;
+  transition: 0.2s background;
+  align-items: center;
+  gap: 0.6em;
+  font-weight: bold;
+}
+
+.btn-lgn .arrow-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-lgn .arrow {
+  margin-top: 1px;
+  width: var(--arrow-width);
+  background: var(--primary-color);
+  height: var(--arrow-stroke);
+  position: relative;
+  transition: 0.2s;
+}
+
+.btn-lgn .arrow::before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  border: solid var(--secondary-color);
+  border-width: 0 var(--arrow-stroke) var(--arrow-stroke) 0;
+  display: inline-block;
+  top: -3px;
+  right: 3px;
+  transition: 0.2s;
+  padding: 3px;
+  transform: rotate(-45deg);
+}
+
+.btn-lgn:hover {
+  background-color: var(--hover-color);
+  color: black;
+}
+
+.btn-lgn:hover .arrow {
+  background: var(--secondary-color);
+}
+
+.btn-lgn:hover .arrow:before {
+  right: 0;
+}
+.active {
+  border-bottom: 3px solid #0097e6;
+  padding-bottom: 5px;
+  color: #fbc531;
+}
+ul {
+  display: flex;
+  gap: 20px;
+}
+li {
+  list-style-type: none;
+}
+#blog-nav {
+  text-decoration: none;
+  color: #333;
+  border-bottom: 3px solid whitesmoke;
+  padding-bottom: 5px;
+  margin-top: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#blog-nav:hover {
+  border-bottom: 3px solid #0097e6;
+  padding-bottom: 5px;
+  color: #fbc531;
+}
+
+.dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  width: 100%;
+  justify-content: center;
+  padding: 20px 100px 20px 100px;
+}
+
+.blog-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.content {
+  padding: 15px;
+}
+
+.title {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0 0 10px;
+}
+
+.category,
+.created-date {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0 0 10px;
+}
+
+.description {
+  font-size: 1rem;
+  color: #444;
+  margin: 0 0 15px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.edit-btn {
+  background-color: #0097e6;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #40739e;
+}
+
+.delete-btn {
+  background-color: #fbc531;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #e1b12c;
+}
+/* article heading  */
+.h1heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+  font-size: 40px;
+  color: #0097e6;
+  margin-bottom: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-decoration: underline;
+}
+/* no post div  */
+.nopostDiv{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#nopost{
+  text-align: center;
+  font-size: 45px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #0097e6;
+  font-weight: 700;
+  margin: 15px 0px 25px 0px;
+}

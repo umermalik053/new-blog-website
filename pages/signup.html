@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+    <!-- all style sheet attach here -->
+    <link rel="stylesheet" href="../css/login.css" />
+    <!-- font awesome style sheet  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <!-- toastify-js style sheet attach  -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+  </head>
+  <body>
+      <!-- signup start here here  -->
+      <div class="container">
+          <!-- signup form start here here  -->
+      <div class="form-container">
+        <!-- signup heading  -->
+        <h2>Sign Up</h2>
+
+      <!-- signup name input  -->
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input id="namesignup" type="text" placeholder="Full Name" required />
+        </div>
+        <!-- singup Email input  -->
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input id="singupEmail" type="email" placeholder="Email" required />
+        </div>
+        <!-- signup password input  -->
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input
+            id="singupPassword"
+            type="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <!-- signup button  -->
+        <button id="signupbtn" class="btn" type="submit">Sign Up</button>
+        <!-- social signup  -->
+        <div class="auth-options">
+          <p>Or sign up with</p>
+          <br />
+          <!-- google sign btn -->
+          <button id="googleBtn" class="google-btn">
+            <i class="fab fa-google"></i> Google
+          </button>
+        </div>
+        <!-- go to login page  -->
+        <div class="link-container">
+          <p>
+            Already have an account? <a href="../pages/login.html">Login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- all js file attach here  -->
+    <script type="module" src="../js/Signup.js"></script>
+    <!-- firebase-config file attach here  -->
+    <script type="module" src="../firebase/firebase-config.js"></script>
+    <!-- toastify-js script file attach here  -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+  </body>
+</html>

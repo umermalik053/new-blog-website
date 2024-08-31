@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blogging Dashboard</title>
+    <!-- Dashboard style sheet attach here  -->
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <!-- font awesome style sheet attach here  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <!-- toastify style sheet attach here  -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  </head>
+  <body>
+
+    <!-- navbar start here  -->
+    <div class="navbar-container">
+      <div class="nav1">
+        <!-- navbar logo -->
+        <h1 class="logo1">
+          <a href="#">Blog <span class="logo2"> Bliss</span></a>
+        </h1>
+      </div>
+      
+      <!-- navbar right side start here  -->
+      <div class="nav2">
+        <!-- linking to dahboard and blogs  -->
+        <ul>
+          <li><a id="blog-nav" href="./blog.html">All Blogs</a></li>
+          <li  class="active"><a id="blog-nav" href="#">Dashboard</a></li>
+        </ul>
+        <!-- logout button  -->
+        <button class="btn-lgn">
+          <a id="Signout" class="anchor" href="#">log Out</a>
+          <div class="arrow-wrapper">
+            <div class="arrow"></div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- main dashboard start here  -->
+    <div class="dashboard-main">
+      <div class="dashboard-container">
+        <!-- dahboard heading  -->
+        <h1>Blogging Dashboard</h1>
+        <div class="form-container">
+          <!-- form start here  -->
+          <form action="#">
+            <!-- title input  -->
+            <div class="input-group">
+              <label for="title"><i class="fas fa-heading"></i> Title</label>
+              <input
+                type="text"
+                id="title"
+                placeholder="Enter your blog title"
+                required
+              />
+            </div>
+            <!-- category input select  -->
+
+            <div class="input-group">
+              <label for="category"
+                ><i class="fas fa-list-alt"></i> Category</label
+              >
+              <select id="category" required>
+                <option value="" disabled selected>Select a category</option>
+                <option value="technology">Technology</option>
+                <option value="lifestyle">Lifestyle</option>
+                <option value="education">Education</option>
+                <option value="health">Health</option>
+                <option value="travel">Travel</option>
+              </select>
+            </div>
+
+            <!-- description input textarea -->
+            <div class="input-group">
+              <label for="description"
+                ><i class="fas fa-align-left"></i> Description</label
+              >
+              <textarea
+                id="description"
+                rows="5"
+                placeholder="Write your blog description"
+                required
+              ></textarea>
+            </div>
+            <!-- picture input  -->
+            <div class="input-group">
+              <label for="picture"><i class="fas fa-image"></i> Picture</label>
+              <input type="file" id="picture" accept="image/*" required />
+              <img
+                id="image-preview"
+                src="#"
+                alt="Image Preview"
+                style="display: none"
+              />
+            </div>
+            <!-- publish button  -->
+            <button id="publishbtn" type="submit" class="btn-submit">
+              <i class="fas fa-paper-plane"></i> Publish
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- my srticles heading  -->
+    <h1 class="blog-heading">My Articles</h1>
+    <!-- loader for articles  -->
+    <div class="loading">
+      <div class="loader"></div>
+    </div>
+
+    <!-- user all post appear here  -->
+    <div class="usercard" >
+    <div class="cardscontainer">
+      <div id="dashboard" class="dashboard"></div>
+    </div>
+  </div>
+
+  
+<!-- all script file attach here  -->
+
+<!-- dashboard js file link  -->
+    <script type="module" src="../js/dashboard.js"></script>
+    <!-- firebase-config file attach  -->
+    <script type="module" src="../firebase/firebase-config.js"></script>
+    <!-- toastify js file attach  -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  </body>
+</html>

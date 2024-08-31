@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Articles</title>
+    <!-- blogs style sheet attach  -->
+    <link rel="stylesheet" href="../css/blogs.css" />
+    <!-- toastify-js style sheet attach  -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+  </head>
+  <body>
+    <!-- navbar start here  -->
+    <div class="navbar-container">
+      <!-- navbar left side start  -->
+      <div class="nav1">
+        <!-- navbar logo  -->
+        <h1 class="logo1">
+          <a href="#">Blog <span class="logo2"> Bliss</span></a>
+        </h1>
+      </div>
+      <!-- navbar right side -->
+      <div class="nav2">
+        <!-- linking to blogs and dashboard  -->
+        <ul>
+          <li class="active">
+            <a id="blog-nav" href="#">All Blogs</a>
+          </li>
+          <li><a id="blog-nav" href="./dashboard.html">Dashboard</a></li>
+        </ul>
+        <!-- logout button  -->
+        <button class="btn-lgn">
+          <a id="Signout" class="anchor" href="#">log Out</a>
+          <div class="arrow-wrapper">
+            <div class="arrow"></div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Articles heading  -->
+    <h1 class="h1heading">Articles</h1>
+
+    <!-- all post appear here  -->
+    <div class="dashboardontainer">
+      <div  id="dashboard" class="dashboard">
+        <!-- post show here -->
+      </div>
+    </div>
+
+      <!-- all script file atatch here  -->
+    <script type="module" src="../js/blogs.js"></script>
+    <!-- firebase-config attach -->
+    <script type="module" src="../firebase/firebase-config.js"></script>
+    <!-- toastify-js link  -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+  </body>
+</html>
