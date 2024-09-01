@@ -103,7 +103,11 @@ const postData = async (e) => {
 
   }else {
     Toastify({
-      text: "Please Enter All Data",
+      text: "sorry data is not being sent to server.",
+      duration: 4000
+      }).showToast();
+    Toastify({
+      text: "Please Enter All Data and wait for picture processing",
       duration: 3000
       }).showToast();
   }

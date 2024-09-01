@@ -1,29 +1,30 @@
-// import from firebase config 
+// import from firebase config
 import {
-    db,
-    collection,
-    getDocs,
-    auth,
-    onAuthStateChanged,
-    signOut,
-  } from "../firebase/firebase-config.js";
+  db,
+  collection,
+  getDocs,
+  auth,
+  onAuthStateChanged,
+  signOut,
+} from "../firebase/firebase-config.js";
 
-
-  let postDiv = document.querySelector("#dashboard")
-  // get data 
-  const getposts = async () => {
-    postDiv.innerHTML = "";
-        const querySnapshot = await getDocs(collection(db, "posts"));
-        try{
-      if (querySnapshot.empty) {
-        postDiv.innerHTML = `
+let postDiv = document.querySelector("#dashboard");
+// get data
+const getposts = async () => {
+  postDiv.innerHTML = "";
+  let loading = document.querySelector(".loading");
+  loading.style.display = "block";
+  const querySnapshot = await getDocs(collection(db, "posts"));
+  try {
+    if (querySnapshot.empty) {
+      postDiv.innerHTML = `
         <div class="nopostDiv">
       <img src="../assets/document.png">
       </br>
       <p id="nopost">No posts founds</p>
       </div>`;
-      } else {
-        postDiv.innerHTML = "";
+    } else {
+      postDiv.innerHTML = "";
       querySnapshot.forEach((doc) => {
         const postData = doc.data();
         postDiv.innerHTML += `
@@ -39,18 +40,20 @@ import {
           </div>
         </div>
         
-        `
-        });
-      }
-    } catch (error) {
-      Toastify({
-        text: error.message,
-        duration: 3000
-        }).showToast();
-    }}
-  
+        `;
+      });
+    }
+  } catch (error) {
+    Toastify({
+      text: error.message,
+      duration: 3000,
+    }).showToast();
+  }finally{
+    loading.style.display = "none";
+  }
+};
 
-  let signout = document.querySelector("#Signout");
+let signout = document.querySelector("#Signout");
 
 const logOut = () => {
   signOut(auth).then(() => {
@@ -59,21 +62,20 @@ const logOut = () => {
 };
 signout.addEventListener("click", logOut);
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      if (window.location.pathname.includes("blog.html")) {
-        getposts(); // Call loadPosts() on page load
-      }
-    } else {
-      if (window.location.pathname.includes("blog.html")) {
-        window.location.href = "login.html";
-      }
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    if (window.location.pathname.includes("blog.html")) {
+      getposts(); // Call loadPosts() on page load
     }
-  });
-
-
-  window.addEventListener("load", () => {
-    if (auth.currentUser) {
-      getposts(); // Load posts on page load if user is authenticated
+  } else {
+    if (window.location.pathname.includes("blog.html")) {
+      window.location.href = "login.html";
     }
-  });
+  }
+});
+
+window.addEventListener("load", () => {
+  if (auth.currentUser) {
+    getposts(); // Load posts on page load if user is authenticated
+  }
+});
