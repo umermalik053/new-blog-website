@@ -1,6 +1,6 @@
 // initializeApp
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-// authentication 
+// authentication
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -8,9 +8,9 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js";
-// firestore data base 
+// firestore data base
 import {
   getFirestore,
   collection,
@@ -18,8 +18,10 @@ import {
   getDocs,
   query,
   where,
+  doc,
+  deleteDoc,
 } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
-// firebase cloud storage 
+// firebase cloud storage
 import {
   getStorage,
   ref,
@@ -27,7 +29,7 @@ import {
   getDownloadURL,
 } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-storage.js";
 
-// firebase app config 
+// firebase app config
 const firebaseConfig = {
   apiKey: "AIzaSyAvTYAmWlVIj8Jfl2or7rruBGLWmmr9Tns",
   authDomain: "blogging-hackathon.firebaseapp.com",
@@ -46,7 +48,7 @@ const db = getFirestore(app);
 // cloudstorage initialize
 const storage = getStorage(app);
 
-// export all value 
+// export all value
 export {
   storage,
   auth,
@@ -65,4 +67,6 @@ export {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
+  doc,
+  deleteDoc,
 };

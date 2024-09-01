@@ -13,6 +13,8 @@ import {
   auth,
   onAuthStateChanged,
   signOut,
+  doc,
+  deleteDoc
 } from "../firebase/firebase-config.js";
 
 
@@ -157,6 +159,7 @@ const loadPosts = async () => {
     // if data sucessfully fetch show else  
     else {
       querySnapshot.forEach((doc) => {
+ 
         userCard.innerHTML += `
           <div class="blog-card">
               <div class="image-container">
@@ -168,8 +171,8 @@ const loadPosts = async () => {
                   <p class="description">${doc.data().description}</p>
                   <p class="created-date">Created Date: ${doc.data().createdDate}</p>
                   <div class="buttons">
-                      <button class="edit-btn">Edit</button>
-                      <button class="delete-btn">Delete</button>
+                      <button onclick="editData('${doc.id}',this)" class="edit-btn">Edit</button>
+                      <button onclick="deleteData('${doc.id}',this)" class="delete-btn">Delete</button>
                   </div>
               </div>
           </div>
@@ -178,7 +181,7 @@ const loadPosts = async () => {
     }
   } catch (error) {
     Toastify({
-      text: error,
+      text: error.message,
       duration: 3000
       }).showToast();
     
@@ -199,6 +202,28 @@ onAuthStateChanged(auth, (user) => {
     }
   }
 });
+window.deleteData = async (id,btn)=>{
+  btn.innerText = "Deleting....." 
+  try {
+    await deleteDoc(doc(db, "posts", id));
+    Toastify({
+      text: "Data Deleted Successfully",
+      duration: 3000
+      }).showToast();
+
+    loadPosts();
+
+  } catch (error) {
+    Toastify({
+      text: error.message,
+      duration: 3000
+      }).showToast();
+  }
+}
+window.editData = (id)=>{
+    console.log("edit button clicked" , id);
+  }
+
 
 // loadPosts is called on page load
 window.addEventListener("load", () => {

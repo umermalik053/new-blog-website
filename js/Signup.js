@@ -33,7 +33,10 @@ signup.addEventListener("click", () => {
     })
     // catch error 
     .catch((error) => {
-      alert(error.message);
+      Toastify({
+        text: error.message,
+        duration: 3000
+        }).showToast();
     });
 
     // signup complete so empty all value 
@@ -79,7 +82,6 @@ if (google) {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     if (
-
       window.location.pathname.includes("login.html") ||
       window.location.pathname.includes("signup.html")||
       window.location.pathname.includes("index.html")
