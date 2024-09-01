@@ -229,7 +229,7 @@ window.editData = async (id, editparam) => {
     category.value = userData.data().category;
     description.value = userData.data().description;
     ImageUrl = userData.data().ImageUrl;
-    updatebtn.style.display = "block";
+      
   } catch (error) {
     console.log(error);
   } finally {
