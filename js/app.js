@@ -47,7 +47,7 @@ window.addEventListener("load", () => {
 // state checking login or not 
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    window.location.href = "../pages/dashboard.html";
+    window.location.href = "./pages/dashboard.html";
   }else{
     console.log("user is not login")
   }
