@@ -1,4 +1,4 @@
-// import from firebase config 
+// import from firebase config
 import {
   storage,
   ref,
@@ -14,9 +14,10 @@ import {
   onAuthStateChanged,
   signOut,
   doc,
-  deleteDoc
+  deleteDoc,
+  getDoc,
+  updateDoc,
 } from "../firebase/firebase-config.js";
-
 
 // Formatting current date
 let date = new Date();
@@ -26,7 +27,7 @@ let day = date.getDate();
 let datedone = day + "/" + month + "/" + year;
 
 let signout = document.querySelector("#Signout");
-// logout function 
+// logout function
 const logOut = () => {
   signOut(auth).then(() => {
     window.location.href = "../pages/login.html";
@@ -75,7 +76,7 @@ if (image) {
   });
 }
 
-// element get 
+// element get
 
 let pictureinput = document.querySelector("#picture");
 let title = document.querySelector("#title");
@@ -85,12 +86,12 @@ let publishbtn = document.querySelector("#publishbtn");
 
 const postData = async (e) => {
   e.preventDefault(); // Prevent form submission
-  let value = title.value
-  let value1 = category.value
-  let value2 = description.value
-  // if all value is true so add doc 
-  if (ImageUrl && value && value1 && value2  ) {
-     await addDoc(collection(db, "posts"), {
+  let value = title.value;
+  let value1 = category.value;
+  let value2 = description.value;
+  // if all value is true so add doc
+  if (ImageUrl && value && value1 && value2) {
+    await addDoc(collection(db, "posts"), {
       title: title.value,
       category: category.value,
       description: description.value,
@@ -98,32 +99,25 @@ const postData = async (e) => {
       createdDate: datedone,
       uid: auth.currentUser.uid,
     });
+    title.value = "";
+    category.value = "";
+    description.value = "";
+    ImageUrl = undefined;
+    pictureinput.value = "";
     Toastify({
       text: "All Data Successfully send to server",
-      duration: 3000
-      }).showToast();
-
-  }else {
+      duration: 3000,
+    }).showToast();
+  } else {
     Toastify({
       text: "sorry data is not being sent to server.",
-      duration: 4000
-      }).showToast();
+      duration: 4000,
+    }).showToast();
     Toastify({
       text: "Please Enter All Data and wait for picture processing",
-      duration: 3000
-      }).showToast();
+      duration: 3000,
+    }).showToast();
   }
-
-
-
-
-  // Clear form inputs after submission
-  title.value = "";
-  category.value = "";
-  description.value = "";
-  ImageUrl = undefined;
-  pictureinput.value = ""
-
   loadPosts(); // Reload posts after adding a new one
 };
 
@@ -140,7 +134,7 @@ const loadPosts = async () => {
   let loading = document.querySelector(".loading");
   loading.style.display = "block";
 
-  // query only login user post 
+  // query only login user post
   const q = query(
     collection(db, "posts"),
     where("uid", "==", auth.currentUser.uid)
@@ -156,10 +150,9 @@ const loadPosts = async () => {
       <p id="nopost">No posts founds</p>
       `;
     }
-    // if data sucessfully fetch show else  
+    // if data sucessfully fetch show else
     else {
       querySnapshot.forEach((doc) => {
- 
         userCard.innerHTML += `
           <div class="blog-card">
               <div class="image-container">
@@ -169,10 +162,16 @@ const loadPosts = async () => {
                   <h3 class="title">${doc.data().title}</h3>
                   <p class="category">Category: ${doc.data().category}</p>
                   <p class="description">${doc.data().description}</p>
-                  <p class="created-date">Created Date: ${doc.data().createdDate}</p>
+                  <p class="created-date">Created Date: ${
+                    doc.data().createdDate
+                  }</p>
                   <div class="buttons">
-                      <button onclick="editData('${doc.id}',this)" class="edit-btn">Edit</button>
-                      <button onclick="deleteData('${doc.id}',this)" class="delete-btn">Delete</button>
+                      <button onclick="editData('${
+                        doc.id
+                      }',this)" class="edit-btn">Edit</button>
+                      <button onclick="deleteData('${
+                        doc.id
+                      }',this)" class="delete-btn">Delete</button>
                   </div>
               </div>
           </div>
@@ -182,9 +181,8 @@ const loadPosts = async () => {
   } catch (error) {
     Toastify({
       text: error.message,
-      duration: 3000
-      }).showToast();
-    
+      duration: 3000,
+    }).showToast();
   } finally {
     loading.style.display = "none"; // Hide loader after fetching posts
   }
@@ -202,36 +200,51 @@ onAuthStateChanged(auth, (user) => {
     }
   }
 });
-window.deleteData = async (id,btn)=>{
-  btn.innerText = "Deleting....." 
+window.deleteData = async (id, btn) => {
+  btn.innerText = "Deleting.....";
   try {
     await deleteDoc(doc(db, "posts", id));
     Toastify({
       text: "Data Deleted Successfully",
-      duration: 3000
-      }).showToast();
+      duration: 3000,
+    }).showToast();
 
     loadPosts();
-
   } catch (error) {
     Toastify({
       text: error.message,
-      duration: 3000
-      }).showToast();
+      duration: 3000,
+    }).showToast();
   }
-}
-window.editData = (id)=>{
-    console.log("edit button clicked" , id);
+};
+let editid;
+window.editData = async (id, editparam) => {
+  editparam.innerText = "Editing......";
+
+  console.log("edit button clicked", id);
+  try {
+    editid = id;
+    let userData = await getDoc(doc(db, "posts", id));
+    title.value = userData.data().title;
+    category.value = userData.data().category;
+    description.value = userData.data().description;
+    ImageUrl = userData.data().ImageUrl;
+    updatebtn.style.display = "block";
+  } catch (error) {
+    console.log(error);
+  } finally {
+    editparam.innerText = "Edit";
   }
+};
 
 
 // loadPosts is called on page load
 window.addEventListener("load", () => {
   if (auth.currentUser) {
-    loadPosts(); 
+    loadPosts();
     Toastify({
       text: "Move Dashboard successfully",
-      duration: 3000
-      }).showToast();
+      duration: 3000,
+    }).showToast();
   }
 });

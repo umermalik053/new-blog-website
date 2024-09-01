@@ -20,6 +20,9 @@ import {
   where,
   doc,
   deleteDoc,
+  getDoc,
+  updateDoc,
+
 } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
 // firebase cloud storage
 import {
@@ -69,4 +72,7 @@ export {
   signInWithPopup,
   doc,
   deleteDoc,
+  getDoc,
+  updateDoc,
+  
 };
