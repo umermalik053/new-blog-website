@@ -50,7 +50,8 @@ onAuthStateChanged(auth, (user) => {
     if (
       window.location.pathname.includes("login.html") ||
       window.location.pathname.includes("signup.html")||
-      window.location.pathname.endsWith("https://umermalik053.github.io/new-blog-website/")
+      window.location.pathname.includes("index.html") ||
+      window.location.href === "https://umermalik053.github.io/new-blog-website/"
     ) {
       window.location.href = "../pages/dashboard.html";
     } else if (window.location.pathname.includes("dashboard.html")) {
