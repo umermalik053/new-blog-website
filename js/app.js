@@ -8,7 +8,7 @@ const getposts = async () => {
     if (querySnapshot.empty) {
       postDiv.innerHTML = `
         <div class="nopostDiv">
-      <img src="../assets/document.png">
+      <img src="./assets/document.png">
       </br>
       <p id="nopost">No posts founds</p>
       </div>`;
