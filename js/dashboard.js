@@ -40,6 +40,8 @@ if (signout) {
 
 // Handle image upload
 let image = document.querySelector("#picture");
+let imagePreview = document.querySelector("#image-preview");
+
 let uploadTask;
 let ImageUrl;
 
@@ -61,6 +63,14 @@ if (image) {
           case "running":
             console.log("Upload is running");
             break;
+        }
+        if (files) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            imagePreview.src = e.target.result;
+            imagePreview.style.display = "block";
+          };
+          reader.readAsDataURL(files);
         }
       },
       (error) => {
@@ -104,6 +114,8 @@ const postData = async (e) => {
     description.value = "";
     ImageUrl = undefined;
     pictureinput.value = "";
+    imagePreview.src = "#"
+    imagePreview.style.display = "none"
     Toastify({
       text: "All Data Successfully send to server",
       duration: 3000,
@@ -118,6 +130,9 @@ const postData = async (e) => {
       duration: 3000,
     }).showToast();
   }
+  pictureinput.value = "";
+  imagePreview.src = "#"
+  imagePreview.style.display = "none"
   loadPosts(); // Reload posts after adding a new one
 };
 
@@ -169,7 +184,8 @@ const loadPosts = async () => {
                       <button onclick="editData('${
                         doc.id
                       }',this)" class="edit-btn">Edit</button>
-                      <button onclick="deleteData('${
+                      <button
+                      onclick="deleteData('${
                         doc.id
                       }',this)" class="delete-btn">Delete</button>
                   </div>
@@ -217,26 +233,6 @@ window.deleteData = async (id, btn) => {
     }).showToast();
   }
 };
-let editid;
-window.editData = async (id, editparam) => {
-  editparam.innerText = "Editing......";
-
-  console.log("edit button clicked", id);
-  try {
-    editid = id;
-    let userData = await getDoc(doc(db, "posts", id));
-    title.value = userData.data().title;
-    category.value = userData.data().category;
-    description.value = userData.data().description;
-    ImageUrl = userData.data().ImageUrl;
-      
-  } catch (error) {
-    console.log(error);
-  } finally {
-    editparam.innerText = "Edit";
-  }
-};
-
 
 // loadPosts is called on page load
 window.addEventListener("load", () => {
@@ -248,3 +244,124 @@ window.addEventListener("load", () => {
     }).showToast();
   }
 });
+
+
+
+
+
+
+
+
+let editid;
+let editModal = document.querySelector("#editModal");
+let closeBtn = document.querySelector(".close-button");
+let editForm = document.querySelector("#editForm");
+let editTitle = document.querySelector("#edit-title");
+let editCategory = document.querySelector("#edit-category");
+let editDescription = document.querySelector("#edit-description");
+let editPicture = document.querySelector("#edit-picture");
+let editImagePreview = document.querySelector("#edit-image-preview");
+let updateBtn = document.querySelector("#updateBtn");
+if (editPicture) {
+  editPicture.addEventListener("change", () => {
+    const files = editPicture.files[0];
+
+    const imagesRefWithFolder = ref(storage, files.name);
+    uploadTask = uploadBytesResumable(imagesRefWithFolder, files);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+        // editImagePreview.src = ImageUrl
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
+        if (files) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            editImagePreview.src = e.target.result;
+            editImagePreview.style.display = "block";
+          };
+          reader.readAsDataURL(files);
+        }
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          ImageUrl = downloadURL;
+          console.log(ImageUrl);
+        });
+      }
+    );
+  });
+  
+}
+
+closeBtn.addEventListener("click", () => {
+  editModal.style.display = "none";
+  Toastify({
+    text: "closed modal from user",
+    duration: 3000,
+  }).showToast();
+});
+
+window.onclick = function (event) {
+  if (event.target == editModal) {
+    editModal.style.display = "none";
+  }
+};
+
+window.editData = async (id, editparam) => {
+  editparam.innerText = "Editing......";
+  try {
+    editid = id;
+    let userData = await getDoc(doc(db, "posts", id));
+    editTitle.value = userData.data().title;
+    editCategory.value = userData.data().category;
+    editDescription.value = userData.data().description;
+    ImageUrl = userData.data().ImageUrl
+    editImagePreview.src = userData.data().ImageUrl;
+    editImagePreview.style.display = "block";
+    editModal.style.display = "block"; // Open the modal
+  } catch (error) {
+    console.log(error);
+  } finally {
+    editparam.innerText = "Edit";
+  }
+};
+
+editForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  try {
+
+    await updateDoc(doc(db, "posts", editid), {
+      title: editTitle.value,
+      category: editCategory.value,
+      description: editDescription.value,
+      ImageUrl: ImageUrl || editImagePreview.src,
+
+    });
+    Toastify({
+      text: "Post Updated Successfully",
+      duration: 3000,
+    }).showToast();
+    editModal.style.display = "none";
+    loadPosts(); // Reload posts after updating
+  } catch (error) {
+    Toastify({
+      text: error.message,
+      duration: 3000,
+    }).showToast();
+  }
+});
+
